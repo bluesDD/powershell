@@ -1,12 +1,17 @@
-﻿Write-Output "Start checking services !"
+﻿Write-Output "Start checking services."
 
 # 確認したいサービス名の配列
 $SERVICES = @("SENS", "seclogon")
+$SERVICE_HEALTH = "Running"
 
-# foreach ($service In $SERVICES) {
-#     Get-Service　$service
-# }
+$services_status =　Get-Service　$SERVICES |ForEach-Object{$_.Status}
+$exit_message = "All target services is runnning!" 
 
-Get-Service　$SERVICES
+for ($i = 0; $i -lt $services_status.Count; $i++) {
+    if ($services_status[$i] -ne $SERVICE_HEALTH) {
+        $exit_message = "Some service are not running..."
+    }
+}
 
-Write-Output "Script ended 1 !"
+Write-Output $exit_message
+Write-Output "Finished checking services."
