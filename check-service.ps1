@@ -1,5 +1,5 @@
 ﻿# 確認したいサービス名の配列
-$TargetServices = @("SENS", "ff")
+$TargetServices = @("SENS")
 # 確認したいサービスの状態
 $TargetServicesHealth = "Running"
 $exitMessage = "OK: status of target services are '$($TargetServicesHealth)'" 

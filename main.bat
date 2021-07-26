@@ -1,3 +1,3 @@
-powershell .\check-service.ps1
+powershell -ExecutionPolicy Unrestricted .\check-service.ps1
 
 pause
