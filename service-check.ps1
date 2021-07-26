@@ -1,24 +1,37 @@
-﻿Write-Output "Start checking services."
+﻿# 確認したいサービス名の配列
+$TargetServices = @("SENS", "ff")
+# 確認したいサービスの状態
+$TargetServicesHealth = "Running"
+$exitMessage = "OK: status of target services are '$($TargetServicesHealth)'" 
 
-# 確認したいサービス名の配列
-$SERVICES = @("SENS", "seclogon")
-$SERVICE_HEALTH = "Running"
+$startDate = Get-Date -DisplayHint DateTime
+Write-Output "$($startDate) Started checking status of:"
+Write-Output "$($TargetServices)"
 
-$services_result =　Get-Service　$SERVICES
-$services_status =　$services_result |ForEach-Object{$_.Status}
-$services_name =　$services_result |ForEach-Object{$_.Name}
-$exit_message = "All target services is runnning!" 
-
-for ($i = 0; $i -lt $services_status.Count; $i++) {
-    if ($services_status[$i] -ne $SERVICE_HEALTH) {
-        $exit_message = "Some services are not running..."
-        Write-Output "$services_name[$i] is not working"
+Get-Service　$TargetServices -ErrorAction Stop | ForEach-Object {
+    if ($_.Status -ne $TargetServicesHealth) {
+        Write-Output "$($_.Name) NG"
+        $exitMessage = "Status of some services are not '$($TargetServicesHealth)'..."
     }
 }
-Show-Message $exit_message
-Write-Output "Finished checking services."
 
-function Show-Message ($message){
-    $obj = New-Object -ComObject wscript.shell
-    return $obj.popup($message)
-}
+Write-Output $exitMessage
+
+$endDate = Get-Date -DisplayHint DateTime
+Write-Output "$($endDate) Finished checking services"
+
+
+# $services_status =　$services_result |ForEach-Object{$_.Status}
+# $services_name =　$services_result |ForEach-Object{$_.Name}
+# for ($i = 0; $i -lt $services_status.Count; $i++) {
+#     if ($services_status[$i] -ne $SERVICE_HEALTH) {
+#         $exit_message = "Some services are not running..."
+#         Write-Output "$services_name[$i] is not working"
+#     }
+# }
+# Show-ResultMessage $exit_message
+
+# function Show-ResultMessage ($message){
+#     $obj = New-Object -ComObject wscript.shell
+#     return $obj.popup($message)
+# }
