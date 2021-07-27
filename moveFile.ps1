@@ -1,9 +1,7 @@
 $startDate = Get-Date -DisplayHint DateTime
 Write-Output "$($startDate) Started $($myInvocation.MyCommand.name)"
 
-$TargetFileName = "testMove.html"
-$TargetFileDirectory = ".\"
-$TargetFile = $TargetFileDirectory + $TargetFileName
+$TargetFile = ".\testMove.html"
 $DestinationDirectory = ".\docs"
 
 try {
