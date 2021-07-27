@@ -6,7 +6,7 @@ Write-Output "$($startDate) Started $($myInvocation.MyCommand.name)"
 
 foreach ($file in $TargetFiles) {
     if (Test-Path $file) {
-        Remove-Item $file
+        Remove-Item $file -Confirm
         Write-Output "Removed $($file)"
     } else {
         Write-Output "Could not be found $($file)"
