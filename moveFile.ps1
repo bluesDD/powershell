@@ -13,5 +13,6 @@ try {
     Write-Output $errorMessage
 } finally {
     $endDate = Get-Date -DisplayHint DateTime
+    
     Write-Output "$($endDate) Finished $($myInvocation.MyCommand.name)"
 }
