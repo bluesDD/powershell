@@ -18,9 +18,8 @@ $bitmap = New-Object System.Drawing.Bitmap($ie.Width, $ie.Height)
 $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
 $graphics.CopyFromScreen($ie.Left, $ie.Top, 0, 0, $bitmap.Size)
 $savedDate = Get-Date -DisplayHint DateTime -Format yyyyMMddhhmm
-if ($savedDate) {
-    $bitmap.Save("screenshot-$($savedDate).jpg")
-}
+$bitmap.Save("screenshot-$($savedDate).jpg")
+
 
 # IEを終了する
 $ie.Quit()
