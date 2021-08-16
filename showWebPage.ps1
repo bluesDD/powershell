@@ -12,12 +12,15 @@ While($ie.busy){
 }
 Start-Sleep -Seconds 2
 
-# スクリーンキャプチャ
+# スクリーンキャプチャ　
+Add-Type -AssemblyName System.Drawing
 $bitmap = New-Object System.Drawing.Bitmap($ie.Width, $ie.Height)
 $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
 $graphics.CopyFromScreen($ie.Left, $ie.Top, 0, 0, $bitmap.Size)
-$savedDate = Get-Date -DisplayHint DateTime
-$bitmap.Save("screenshot-.jpg")
+$savedDate = Get-Date -DisplayHint DateTime -Format yyyyMMddhhmm
+if ($savedDate) {
+    $bitmap.Save("screenshot-$($savedDate).jpg")
+}
 
 # IEを終了する
 $ie.Quit()

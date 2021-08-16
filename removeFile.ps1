@@ -1,16 +1,23 @@
-$TargetFiles = $(".\testMove.html", ".\testRemove.html")
+$TargetFiles = $(".\testMove.html")
 
 $startDate = Get-Date -DisplayHint DateTime
 Write-Output "$($startDate) Started $($myInvocation.MyCommand.name)"
 
 
 foreach ($file in $TargetFiles) {
-    if (Test-Path $file) {
-        Remove-Item $file -Confirm
-        Write-Output "Removed $($file)"
-    } else {
-        Write-Output "Could not be found $($file)"
+    if ( -not (Test-Path $file)) {
+        Write-Output "Could not be found $($file). Exit."
+        exit
     }
+    
+    Remove-Item $file -Confirm
+
+    # Remove-Itemが実行されなかった場合の終了処理
+    if (Test-Path $file) {
+        Write-Output "File was not removed. Exit."
+        exit
+    }
+    Write-Output "File was deleted."
 }
 
 
